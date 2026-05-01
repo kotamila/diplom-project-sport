@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "./Header";
 import { Menu } from "./Menu";
+import "./common.css";
 
 export const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

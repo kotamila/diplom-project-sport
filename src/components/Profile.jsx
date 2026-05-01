@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Header } from "./Header";
 import { Menu } from "./Menu";
+import "./Profile.css";
+import './common.css';
 
 export const Profile = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

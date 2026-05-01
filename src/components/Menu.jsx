@@ -1,3 +1,6 @@
+import './Menu.css';
+import "./common.css";
+
 import { Link } from "react-router-dom";
 
 export const Menu = ({ isOpen, onClose }) => {

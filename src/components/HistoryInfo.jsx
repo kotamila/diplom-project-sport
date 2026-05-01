@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Header } from "./Header";
 import { Menu } from "./Menu";
+import './HistoryInfo.css';
+import './common.css';
 
 export const HistoryInfo = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

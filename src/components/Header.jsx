@@ -1,3 +1,5 @@
+import './common.css';
+
 export const Header = ({ onMenuOpen }) => (
   <header className="header">
     <div className="logo">SPORT</div>
