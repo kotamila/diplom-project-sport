@@ -24,7 +24,7 @@ export const Home = () => {
 
         <div className="illustration-container">
           <img
-            src="/images/image_home_skreen.png"
+            src="public/images/image_home_skreen.png"
             alt="Running person illustration"
             className="hero-illustration"
           />

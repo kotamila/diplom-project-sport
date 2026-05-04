@@ -1,0 +1,88 @@
+.home-container {
+  padding: 0;
+}
+
+.logo {
+  margin: 17px 189px 72px 26px;
+  font-weight: 900;
+  font-size: 24px;
+}
+
+.burger-menu {
+  margin: 32px 29px 77px 0;
+}
+
+.welcome-title {
+  font-size: 20px;
+  font-weight: bold;
+  padding-right: 26px;
+  margin-bottom: 7px;
+  padding-left: 26px;
+}
+
+.hero-illustration {
+  display: block;
+  margin: 113px 66px 88px 19px;
+  width: auto;
+  max-width: 100%;
+}
+
+.btn-primary {
+  margin: 88px 32px 128px 26px;
+}
+
+.btn-secondary {
+  margin-left: 29px;
+  margin-bottom: 128px;
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+    margin: 34px 972px 80px 42px;
+  }
+
+  .welcome-title {
+    font-size: 40px;
+    padding-right: 42px;
+    margin-bottom: 10px;
+    padding-left: 42px;
+  }
+
+  .hero-illustration {
+    margin: 116px 475px 63px 437px;
+  }
+
+  .btn-primary {
+    margin: 63px 76px 41px 278px;
+  }
+
+  .btn-secondary {
+    margin-left: 288px;
+    margin-bottom: 41px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .logo {
+    margin: 37px 989px 96px 76px;
+  }
+
+  .welcome-title {
+    font-size: 40px;
+    padding-right: 76px;
+    padding-left: 76px;
+  }
+
+  .hero-illustration {
+    margin: 116px 566px 63px 592px;
+  }
+
+  .btn-primary {
+    margin: 67px 76px 181px 433px;
+  }
+
+  .btn-secondary {
+    margin-left: 379px;
+    margin-bottom: 181px;
+  }
+}

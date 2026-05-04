@@ -1,0 +1,45 @@
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  background-color: transparent;
+}
+
+.logo {
+  font-weight: 900;
+  font-size: 24px;
+  color: #14359D;
+
+  margin: 17px 0 72px 26px; 
+  text-decoration: none;
+}
+
+.burger-menu {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  margin: 32px 29px 77px 0;
+}
+
+.burger-icon {
+  width: 30px;
+  height: auto;
+  display: block;
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+    margin: 34px 0 80px 42px;
+    font-size: 28px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .logo {
+    margin: 37px 0 96px 76px;
+    font-size: 32px;
+  }
+}
