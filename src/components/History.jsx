@@ -4,6 +4,7 @@ import { Header } from "./Header";
 import { Menu } from "./Menu";
 import "./History.css";
 import "./common.css";
+import './History.css';
 
 export const History = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +31,6 @@ export const History = () => {
                     <span>Важкість: {workout.difficulty}/10</span>
                   </div>
                 </div>
-                {/* Кнопка "Переглянути" веде на сторінку деталей за ID */}
                 <button
                   className="btn-view"
                   onClick={() => navigate(`/history-info/${workout.id}`)}
