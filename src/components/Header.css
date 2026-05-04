@@ -9,22 +9,25 @@
 .logo {
   font-weight: 900;
   font-size: 24px;
-  color: #14359D;
+  color: #14359d;
 
-  margin: 17px 0 72px 26px; 
+  margin: 17px 0 72px 26px;
   text-decoration: none;
 }
 
 .burger-menu {
+  display: flex;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  min-width: 30px;
 
   margin: 32px 29px 77px 0;
 }
 
 .burger-icon {
+  display: block !important;
   width: 30px;
   height: auto;
   display: block;
@@ -33,13 +36,11 @@
 @media screen and (min-width: 768px) {
   .logo {
     margin: 34px 0 80px 42px;
-    font-size: 28px;
   }
 }
 
 @media screen and (min-width: 1024px) {
   .logo {
     margin: 37px 0 96px 76px;
-    font-size: 32px;
   }
 }

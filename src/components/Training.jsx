@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import { Menu } from "./Menu";
 import './Training.css';
 import './common.css';
+import './Header.css';
 
 export const Training = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

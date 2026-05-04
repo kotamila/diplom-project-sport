@@ -9,35 +9,39 @@ export const Menu = ({ isOpen, onClose }) => {
   return (
     <div className="menu-overlay">
       <header className="menu-header">
-        <div className="logo-white">SPORT</div>
+        <img
+          src="./public/images/logo_white.png"
+          alt="Logo"
+          className="logo-white"
+        />
         <button
           className="close-button"
           onClick={onClose}
           aria-label="Закрити меню"
         >
-          <img src="/images/close_button.png" alt="Close" />
+          <img src="./public/images/close_button.png" alt="Close" />
         </button>
       </header>
 
       <nav className="menu-nav">
-        <ul>
+        <ul className="menu-list">
           <li>
-            <Link to="/" onClick={onClose}>
+            <Link to="/" className="menu-item" onClick={onClose}>
               Головна
             </Link>
           </li>
           <li>
-            <Link to="/profile" onClick={onClose}>
+            <Link to="/profile" className="menu-item" onClick={onClose}>
               Профіль
             </Link>
           </li>
           <li>
-            <Link to="/training" onClick={onClose}>
+            <Link to="/training" className="menu-item" onClick={onClose}>
               Записати тренування
             </Link>
           </li>
           <li>
-            <Link to="/history" onClick={onClose}>
+            <Link to="/history" className="menu-item" onClick={onClose}>
               Історія тренувань
             </Link>
           </li>
