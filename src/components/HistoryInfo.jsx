@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Header } from "./Header";
 import { Menu } from "./Menu";
-import './HistoryInfo.css';
-import './common.css';
+import "./HistoryInfo.css";
+import "./common.css";
 
 export const HistoryInfo = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const history = JSON.parse(localStorage.getItem("workoutHistory") || "[]");
@@ -17,8 +17,15 @@ export const HistoryInfo = () => {
     return (
       <div className="page-container">
         <Header onMenuOpen={() => setIsMenuOpen(true)} />
-        <p>Тренування не знайдено</p>
-        <button onClick={() => navigate("/history")}>Назад до історії</button>
+        <div className="error-container">
+          <p>Тренування не знайдено</p>
+          <button
+            className="btn-back-main"
+            onClick={() => navigate("/history")}
+          >
+            Назад до історії
+          </button>
+        </div>
       </div>
     );
   }
@@ -29,43 +36,38 @@ export const HistoryInfo = () => {
       <Menu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       <main className="history-info-main">
-        <button className="btn-back" onClick={() => navigate("/history")}>
-          {"<"} Назад
-        </button>
-
-        <h1>Інформація про тренування</h1>
-        <p className="workout-date-title">{workout.date}</p>
-
-        <section className="exercises-results">
+        <section className="summary-box">
+          <h2>Інформація про тренування</h2>
+          <div className="summary-content">
+            <p>Дата: {workout.date}</p>
+            <p>Кількість вправ: {workout.exercises.length}</p>
+            <p>
+              Кількість підходів:{" "}
+              {workout.exercises.reduce((acc, ex) => acc + ex.sets.length, 0)}
+            </p>
+            <p>Середній пульс під час тренування: {workout.pulse.max} уд/хв</p>
+            <p>Оцінка важкості тренування: {workout.difficulty}</p>
+          </div>
+        </section>
+        <section className="exercises-grid">
           {workout.exercises.map((ex, idx) => (
-            <div key={ex.id || idx} className="exercise-result-block">
-              <h3>{ex.name}</h3>
-              <div className="sets-list">
+            <div key={ex.id || idx} className="exercise-card">
+              <h3>
+                Вправа {idx + 1} – {ex.name}
+              </h3>
+              <p className="sets-count">{ex.sets.length} підходи</p>
+
+              <div className="sets-info">
+                <p className="info-label">Інформація про підходи:</p>
                 {ex.sets.map((set, sIdx) => (
-                  <div key={sIdx} className="set-item">
-                    <span>Підхід {sIdx + 1}:</span>
-                    <span>{set.reps} повторень</span>
-                    {set.weight && <span>(+{set.weight} кг)</span>}
+                  <div key={sIdx} className="set-input-display">
+                    {set.reps} повторень{" "}
+                    {set.weight ? `(+${set.weight} кг)` : ""}
                   </div>
                 ))}
               </div>
             </div>
           ))}
-        </section>
-
-        <section className="additional-info-results">
-          <div className="info-row">
-            <span>Пульс:</span>
-            <span>
-              {workout.pulse.min} - {workout.pulse.max} уд/хв
-            </span>
-          </div>
-          <div className="info-row">
-            <span>Важкість тренування:</span>
-            <div className="difficulty-indicator">
-              <strong>{workout.difficulty}</strong> / 10
-            </div>
-          </div>
         </section>
       </main>
     </div>
