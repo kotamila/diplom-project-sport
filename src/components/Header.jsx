@@ -3,10 +3,10 @@ import './Header.css';
 
 export const Header = ({ onMenuOpen }) => (
   <header className="header-wrapper">
-    <img src="/images/logo.png" alt="Logo" className="logo" />
+    <img src="./public/images/logo.png" alt="Logo" className="logo" />
     <button className="burger-menu" onClick={onMenuOpen}>
       <img
-        src="/images/burger.png"
+        src="./public/images/burger.png"
         alt="Menu"
         className="burger-icon"
       />
