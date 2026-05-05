@@ -164,7 +164,26 @@ export const Profile = () => {
             type={user.birthday ? "date" : "text"}
             placeholder="Дата народження"
             value={user.birthday}
-            onFocus={(e) => (e.target.type = "date")}
+            onFocus={(e) => {
+              e.target.type = "date";
+              if ("showPicker" in HTMLInputElement.prototype) {
+                try {
+                  e.target.showPicker();
+                } catch (err) {
+                  console.log(err);
+                }
+              }
+            }}
+            onClick={(e) => {
+              e.target.type = "date";
+              if ("showPicker" in HTMLInputElement.prototype) {
+                try {
+                  e.target.showPicker();
+                } catch (err) {
+                  console.log(err);
+                }
+              }
+            }}
             onBlur={(e) => !user.birthday && (e.target.type = "text")}
             onChange={(e) => {
               setUser({ ...user, birthday: e.target.value });
