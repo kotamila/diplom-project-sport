@@ -37,6 +37,10 @@
   .logo {
     margin: 34px 0 80px 42px;
   }
+
+  .burger-menu {
+    margin: 32px 42px 77px 0;
+  }
 }
 
 @media screen and (min-width: 1024px) {

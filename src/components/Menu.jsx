@@ -19,7 +19,7 @@ export const Menu = ({ isOpen, onClose }) => {
           onClick={onClose}
           aria-label="Закрити меню"
         >
-          <img src="./public/images/close_button.png" alt="Close" />
+          <span className="close-icon"></span>
         </button>
       </header>
 
