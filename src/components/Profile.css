@@ -23,6 +23,24 @@ input {
   border-radius: 8px;
   background: var(--white);
   box-sizing: border-box;
+  
+  font-family: inherit;
+  font-size: 16px;
+  min-height: 50px; 
+  appearance: none;
+  -webkit-appearance: none;
+  color: #1C39A1;
+}
+
+input[type="date"],
+input[type="number"] {
+  display: flex;
+  align-items: center;
+}
+
+input::-webkit-date-and-time-value {
+  text-align: left;
+  min-height: 20px;
 }
 
 .btn-primary {
@@ -36,6 +54,7 @@ input {
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 15px;
+  font-size: 16px;
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -119,10 +138,11 @@ input {
 }
 
 .weight-edit input {
-  width: 70px;
+  width: 80px;
   text-align: center;
   margin-bottom: 0;
   padding: 8px;
   color: #1C39A1;
   font-weight: bold;
+  min-height: 40px;
 }
