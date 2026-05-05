@@ -8,6 +8,7 @@ import "./common.css";
 export const Training = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [exercises, setExercises] = useState([
     { id: 1, name: "", sets: [{ reps: "", weight: "" }] },
@@ -37,19 +38,27 @@ export const Training = () => {
     const newEx = [...exercises];
     newEx[exIdx].sets[sIdx][field] = value;
     setExercises(newEx);
+    setErrorMessage("");
   };
 
   const handleSaveWorkout = () => {
-    if (!difficulty || exercises[0].name.trim() === "") {
-      alert("Будь ласка, введіть назву вправи та оберіть складність!");
+    const isValid = exercises.every(
+      (ex) =>
+        ex.name.trim() !== "" && ex.sets.some((set) => set.reps.trim() !== ""),
+    );
+
+    if (!isValid) {
+      setErrorMessage(
+        "Будь ласка, введіть назву вправи та кількість повторень!",
+      );
       return;
     }
 
     const workout = {
       id: Date.now(),
       date: new Date().toISOString(),
-      exercises,
-      difficulty,
+      exercises: exercises.filter((ex) => ex.name.trim() !== ""),
+      difficulty: difficulty || "Не вказано",
       pulse,
     };
 
@@ -81,6 +90,7 @@ export const Training = () => {
                   const newEx = [...exercises];
                   newEx[exIdx].name = e.target.value;
                   setExercises(newEx);
+                  setErrorMessage("");
                 }}
               />
 
@@ -115,6 +125,7 @@ export const Training = () => {
             Додати вправу
           </button>
 
+          {/* СЕКЦІЯ ПУЛЬСУ */}
           <section className="training-section">
             <h2 className="section-subtitle">Пульс</h2>
             <div className="pulse-container">
@@ -145,13 +156,29 @@ export const Training = () => {
                   className={`diff-box box-${i + 1} ${
                     difficulty === i + 1 ? "active" : ""
                   }`}
-                  onClick={() => setDifficulty(i + 1)}
+                  onClick={() => {
+                    setDifficulty(i + 1);
+                    setErrorMessage("");
+                  }}
                 >
                   {i + 1}
                 </div>
               ))}
             </div>
           </section>
+
+          {errorMessage && (
+            <p
+              className="error-message-text"
+              style={{
+                color: "red",
+                textAlign: "center",
+                marginBottom: "15px",
+              }}
+            >
+              {errorMessage}
+            </p>
+          )}
 
           <button className="btn-save-workout" onClick={handleSaveWorkout}>
             Зберегти
