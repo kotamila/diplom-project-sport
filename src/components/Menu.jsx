@@ -45,6 +45,11 @@ export const Menu = ({ isOpen, onClose }) => {
               Історія тренувань
             </Link>
           </li>
+          <li>
+            <Link to="/analytics" className="menu-item" onClick={onClose}>
+              Аналітика
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>
