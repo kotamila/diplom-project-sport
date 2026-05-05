@@ -39,7 +39,14 @@ export const HistoryInfo = () => {
         <section className="summary-box">
           <h2>Інформація про тренування</h2>
           <div className="summary-content">
-            <p>Дата: {workout.date}</p>
+            <p>
+              Дата:{" "}
+              {new Date(workout.date).toLocaleDateString("uk-UA", {
+                day: "numeric",
+                month: "long",
+                weekday: "long",
+              })}
+            </p>
             <p>Кількість вправ: {workout.exercises.length}</p>
             <p>
               Кількість підходів:{" "}

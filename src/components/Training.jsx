@@ -47,11 +47,7 @@ export const Training = () => {
 
     const workout = {
       id: Date.now(),
-      date: new Date().toLocaleDateString("uk-UA", {
-        day: "numeric",
-        month: "long",
-        weekday: "long",
-      }),
+      date: new Date().toISOString(),
       exercises,
       difficulty,
       pulse,

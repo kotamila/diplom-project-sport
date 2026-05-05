@@ -25,7 +25,14 @@ export const History = () => {
             history.map((workout) => (
               <div key={workout.id} className="history-card">
                 <div className="card-content">
-                  <p className="workout-date">{workout.date}</p>
+                  <p>
+                    Дата:{" "}
+                    {new Date(workout.date).toLocaleDateString("uk-UA", {
+                      day: "numeric",
+                      month: "long",
+                      weekday: "long",
+                    })}
+                  </p>
                   <div className="workout-stats">
                     <span>{workout.exercises.length} вправи</span>
                     <span>Важкість: {workout.difficulty}/10</span>
@@ -45,6 +52,7 @@ export const History = () => {
         </div>
 
         <button
+          type="button"
           className="btn-analytics"
           onClick={() => navigate("/analytics")}
         >

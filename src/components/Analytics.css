@@ -1,0 +1,65 @@
+.analytics-main {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.analytics-section h2 {
+  color: #1C39A1;
+  font-size: 20px;
+  margin-bottom: 15px;
+  padding-left: 5px;
+}
+
+.calendar-wrapper {
+  background: white;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* ЗАБАРВЛЕННЯ ДНІВ ТРЕНУВАНЬ */
+.workout-day-highlight {
+  background: #E8EFFF !important; /* Світло-блакитний колір фону */
+  border-radius: 50%; /* Робимо дні круглими */
+  color: #1C39A1 !important;
+  font-weight: bold;
+}
+
+.fire-icon {
+  font-size: 10px;
+  position: absolute;
+  bottom: 2px;
+}
+
+.chart-container {
+  background: white;
+  padding: 20px 20px 10px 10px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Стилізація самого календаря */
+.react-calendar {
+  border: none !important;
+  width: 100% !important;
+  font-family: 'Inter', sans-serif;
+}
+
+.react-calendar__tile {
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.react-calendar__tile--active {
+  background: #1C39A1 !important;
+  color: white !important;
+  border-radius: 50%;
+}
