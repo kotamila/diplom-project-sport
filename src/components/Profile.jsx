@@ -6,6 +6,8 @@ import "./common.css";
 
 export const Profile = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const [registerError, setRegisterError] = useState("");
 
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem("user");
@@ -23,77 +25,88 @@ export const Profile = () => {
 
   const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const isRegisterFormValid =
+  // Перевірка, чи всі поля реєстрації заповнені
+  const isRegisterFormComplete =
     user.firstName.trim() !== "" &&
     user.lastName.trim() !== "" &&
-    isEmailValid(user.email) &&
+    user.email.trim() !== "" &&
     user.birthday.trim() !== "" &&
     user.weight.trim() !== "";
 
   const isLoginFormValid =
     loginData.firstName.trim() !== "" && loginData.lastName.trim() !== "";
 
- const updateWeightHistory = (weightValue) => {
-   const history = JSON.parse(localStorage.getItem("weightHistory") || "[]");
-   const lastEntry = history[history.length - 1];
+  const updateWeightHistory = (weightValue) => {
+    if (!weightValue) return;
+    const history = JSON.parse(localStorage.getItem("weightHistory") || "[]");
+    const lastEntry = history[history.length - 1];
 
-   if (lastEntry && lastEntry.weight === Number(weightValue)) {
-     return;
-   }
+    if (lastEntry && lastEntry.weight === Number(weightValue)) return;
 
-   const now = new Date();
-   const timeLabel = now.toLocaleTimeString("uk-UA", {
-     hour: "2-digit",
-     minute: "2-digit",
-   });
-   const dateLabel = now.toLocaleDateString("uk-UA", {
-     day: "2-digit",
-     month: "short",
-   });
+    const now = new Date();
+    const timeLabel = now.toLocaleTimeString("uk-UA", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const dateLabel = now.toLocaleDateString("uk-UA", {
+      day: "2-digit",
+      month: "short",
+    });
 
-   const newEntry = {
-     date: `${dateLabel} ${timeLabel}`,
-     weight: Number(weightValue),
-     fullDate: now.toISOString(),
-   };
+    const newEntry = {
+      date: `${dateLabel} ${timeLabel}`,
+      weight: Number(weightValue),
+      fullDate: now.toISOString(),
+    };
 
-   localStorage.setItem(
-     "weightHistory",
-     JSON.stringify([...history, newEntry]),
-   );
- };
-
+    localStorage.setItem(
+      "weightHistory",
+      JSON.stringify([...history, newEntry]),
+    );
+  };
 
   const handleSave = () => {
+    if (!isRegisterFormComplete) {
+      setRegisterError("Будь ласка, введіть всі дані.");
+      return;
+    }
+
+    if (!isEmailValid(user.email)) {
+      setRegisterError("Будь ласка, введіть коректну електронну пошту.");
+      return;
+    }
+
     localStorage.setItem("user", JSON.stringify(user));
     updateWeightHistory(user.weight);
+    setRegisterError("");
     setView("details");
   };
 
   const handleLogin = () => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
 
-    if (savedUser) {
+    if (
+      savedUser &&
+      savedUser.firstName.toLowerCase() === loginData.firstName.toLowerCase() &&
+      savedUser.lastName.toLowerCase() === loginData.lastName.toLowerCase()
+    ) {
       setUser(savedUser);
-      updateWeightHistory(savedUser.weight); 
+      updateWeightHistory(savedUser.weight);
+      setLoginError("");
+      setView("details");
     } else {
-      const newUser = {
-        ...user,
-        firstName: loginData.firstName,
-        lastName: loginData.lastName,
-      };
-      setUser(newUser);
-      localStorage.setItem("user", JSON.stringify(newUser));
+      setLoginError(
+        "Акаунт не знайдено. Будь ласка, перевірте дані або зареєструйтесь.",
+      );
     }
-    setView("details");
   };
 
-const handleWeightChange = (newWeight) => {
-  const updatedUser = { ...user, weight: newWeight };
-  setUser(updatedUser);
-  localStorage.setItem("user", JSON.stringify(updatedUser));
-};
-  
+  const handleWeightChange = (newWeight) => {
+    const updatedUser = { ...user, weight: newWeight };
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+  };
+
   const handleWeightBlur = () => {
     if (user.weight && user.weight.trim() !== "") {
       updateWeightHistory(user.weight);
@@ -125,40 +138,69 @@ const handleWeightChange = (newWeight) => {
             type="text"
             placeholder="Ім'я"
             value={user.firstName}
-            onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+            onChange={(e) => {
+              setUser({ ...user, firstName: e.target.value });
+              setRegisterError("");
+            }}
           />
           <input
             type="text"
             placeholder="Прізвище"
             value={user.lastName}
-            onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+            onChange={(e) => {
+              setUser({ ...user, lastName: e.target.value });
+              setRegisterError("");
+            }}
           />
           <input
             type="email"
             placeholder="Електронна пошта"
             value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            onChange={(e) => {
+              setUser({ ...user, email: e.target.value });
+              setRegisterError("");
+            }}
           />
           <input
             type="date"
             placeholder="Дата народження"
             value={user.birthday}
-            onChange={(e) => setUser({ ...user, birthday: e.target.value })}
+            onChange={(e) => {
+              setUser({ ...user, birthday: e.target.value });
+              setRegisterError("");
+            }}
           />
           <input
             type="number"
             placeholder="Вага"
             value={user.weight}
-            onChange={(e) => setUser({ ...user, weight: e.target.value })}
+            onChange={(e) => {
+              setUser({ ...user, weight: e.target.value });
+              setRegisterError("");
+            }}
           />
-          <button
-            className="btn-primary"
-            onClick={handleSave}
-            disabled={!isRegisterFormValid}
-          >
+
+          <button className="btn-primary" onClick={handleSave}>
             Зареєструватись
           </button>
-          <p className="login-link" onClick={() => setView("login")}>
+
+          {registerError && (
+            <p
+              className="error-message"
+              style={{ color: "red", marginTop: "10px", fontSize: "14px" }}
+            >
+              {registerError}
+            </p>
+          )}
+
+          <p
+            className="login-link"
+            onClick={() => {
+              setView("login");
+              setLoginError("");
+              setRegisterError("");
+            }}
+          >
             Вже є акаунт? Увійти
           </p>
         </main>
@@ -171,17 +213,19 @@ const handleWeightChange = (newWeight) => {
             type="text"
             placeholder="Ім'я"
             value={loginData.firstName}
-            onChange={(e) =>
-              setLoginData({ ...loginData, firstName: e.target.value })
-            }
+            onChange={(e) => {
+              setLoginData({ ...loginData, firstName: e.target.value });
+              setLoginError("");
+            }}
           />
           <input
             type="text"
             placeholder="Прізвище"
             value={loginData.lastName}
-            onChange={(e) =>
-              setLoginData({ ...loginData, lastName: e.target.value })
-            }
+            onChange={(e) => {
+              setLoginData({ ...loginData, lastName: e.target.value });
+              setLoginError("");
+            }}
           />
           <button
             className="btn-primary"
@@ -190,7 +234,24 @@ const handleWeightChange = (newWeight) => {
           >
             Увійти
           </button>
-          <p className="login-link" onClick={() => setView("register")}>
+
+          {loginError && (
+            <p
+              className="error-message"
+              style={{ color: "red", marginTop: "10px", fontSize: "14px" }}
+            >
+              {loginError}
+            </p>
+          )}
+
+          <p
+            className="login-link"
+            onClick={() => {
+              setView("register");
+              setLoginError("");
+              setRegisterError("");
+            }}
+          >
             Немає акаунту? Реєстрація
           </p>
         </main>
