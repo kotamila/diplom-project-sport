@@ -42,6 +42,21 @@ export const Training = () => {
   };
 
   const handleSaveWorkout = () => {
+    const currentUser = localStorage.getItem("user");
+    if (!currentUser) {
+      setErrorMessage(
+        "Будь ласка, авторизуйтесь у профілі, щоб зберігати тренування!",
+      );
+      return;
+    }
+
+    if (pulse.min && pulse.max && Number(pulse.min) > Number(pulse.max)) {
+      setErrorMessage(
+        "Мінімальний пульс не може бути більшим за максимальний!",
+      );
+      return;
+    }
+
     const isValid = exercises.every(
       (ex) =>
         ex.name.trim() !== "" && ex.sets.some((set) => set.reps.trim() !== ""),
@@ -125,24 +140,37 @@ export const Training = () => {
             Додати вправу
           </button>
 
-          {/* СЕКЦІЯ ПУЛЬСУ */}
           <section className="training-section">
             <h2 className="section-subtitle">Пульс</h2>
             <div className="pulse-container">
               <input
                 type="number"
+                min="0"
                 placeholder="Мін"
                 className="pulse-input"
                 value={pulse.min}
-                onChange={(e) => setPulse({ ...pulse, min: e.target.value })}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "" || Number(val) >= 0) {
+                    setPulse({ ...pulse, min: val });
+                    setErrorMessage("");
+                  }
+                }}
               />
               <span className="pulse-divider">—</span>
               <input
                 type="number"
+                min="0"
                 placeholder="Макс"
                 className="pulse-input"
                 value={pulse.max}
-                onChange={(e) => setPulse({ ...pulse, max: e.target.value })}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "" || Number(val) >= 0) {
+                    setPulse({ ...pulse, max: val });
+                    setErrorMessage("");
+                  }
+                }}
               />
             </div>
           </section>
@@ -168,16 +196,29 @@ export const Training = () => {
           </section>
 
           {errorMessage && (
-            <p
-              className="error-message-text"
-              style={{
-                color: "red",
-                textAlign: "center",
-                marginBottom: "15px",
-              }}
-            >
-              {errorMessage}
-            </p>
+            <div style={{ textAlign: "center", marginBottom: "15px" }}>
+              <p
+                className="error-message-text"
+                style={{ color: "red", margin: "0 0 5px 0" }}
+              >
+                {errorMessage}
+              </p>
+              {errorMessage.includes("авторизуйтесь") && (
+                <button
+                  onClick={() => navigate("/profile")}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "#14359d",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Перейти до профілю
+                </button>
+              )}
+            </div>
           )}
 
           <button className="btn-save-workout" onClick={handleSaveWorkout}>

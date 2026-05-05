@@ -25,7 +25,6 @@ export const Profile = () => {
 
   const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // Перевірка, чи всі поля реєстрації заповнені
   const isRegisterFormComplete =
     user.firstName.trim() !== "" &&
     user.lastName.trim() !== "" &&

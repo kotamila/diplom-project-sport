@@ -21,10 +21,9 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* ЗАБАРВЛЕННЯ ДНІВ ТРЕНУВАНЬ */
 .workout-day-highlight {
-  background: #E8EFFF !important; /* Світло-блакитний колір фону */
-  border-radius: 50%; /* Робимо дні круглими */
+  background: #E8EFFF !important;
+  border-radius: 50%;
   color: #1C39A1 !important;
   font-weight: bold;
 }
@@ -42,7 +41,6 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* Стилізація самого календаря */
 .react-calendar {
   border: none !important;
   width: 100% !important;
