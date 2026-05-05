@@ -21,10 +21,10 @@ export const Analytics = () => {
     () => JSON.parse(localStorage.getItem("workoutHistory") || "[]"),
     [],
   );
-  const weightHistory = useMemo(
-    () => JSON.parse(localStorage.getItem("weightHistory") || "[]"),
-    [],
-  );
+  const weightHistory = useMemo(() => {
+    const data = JSON.parse(localStorage.getItem("weightHistory") || "[]");
+    return data.sort((a, b) => new Date(a.fullDate) - new Date(b.fullDate));
+  }, []);
 
   const workoutDates = useMemo(
     () => history.map((w) => new Date(w.date).toDateString()),
@@ -101,7 +101,7 @@ export const Analytics = () => {
                   tickLine={false}
                   axisLine={false}
                   domain={[0, "dataMax + 2"]}
-                  ticks={[0, 2, 4, 6, 8, 10]} // Шкала тренувань
+                  ticks={[0, 2, 4, 6, 8, 10]}
                 />
                 <Tooltip
                   contentStyle={{
@@ -141,16 +141,20 @@ export const Analytics = () => {
                 <XAxis
                   dataKey="date"
                   stroke="#1C39A1"
-                  fontSize={12}
+                  fontSize={10}
                   tickLine={false}
                   axisLine={false}
+                  interval={0}
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
                 />
                 <YAxis
                   stroke="#1C39A1"
                   fontSize={12}
                   tickLine={false}
                   axisLine={false}
-                  domain={[40, 170]} // Шкала від 40 до 170
+                  domain={[40, 170]}
                   ticks={[40, 60, 80, 100, 120, 140, 160, 170]}
                 />
                 <Tooltip
@@ -179,4 +183,4 @@ export const Analytics = () => {
       </main>
     </div>
   );
-};
+};;

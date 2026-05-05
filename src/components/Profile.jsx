@@ -20,6 +20,7 @@ export const Profile = () => {
     return localStorage.getItem("user") ? "details" : "register";
   });
 
+
   const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const isRegisterFormValid =
@@ -32,8 +33,40 @@ export const Profile = () => {
   const isLoginFormValid =
     loginData.firstName.trim() !== "" && loginData.lastName.trim() !== "";
 
+ const updateWeightHistory = (weightValue) => {
+   const history = JSON.parse(localStorage.getItem("weightHistory") || "[]");
+   const lastEntry = history[history.length - 1];
+
+   if (lastEntry && lastEntry.weight === Number(weightValue)) {
+     return;
+   }
+
+   const now = new Date();
+   const timeLabel = now.toLocaleTimeString("uk-UA", {
+     hour: "2-digit",
+     minute: "2-digit",
+   });
+   const dateLabel = now.toLocaleDateString("uk-UA", {
+     day: "2-digit",
+     month: "short",
+   });
+
+   const newEntry = {
+     date: `${dateLabel} ${timeLabel}`,
+     weight: Number(weightValue),
+     fullDate: now.toISOString(),
+   };
+
+   localStorage.setItem(
+     "weightHistory",
+     JSON.stringify([...history, newEntry]),
+   );
+ };
+
+
   const handleSave = () => {
     localStorage.setItem("user", JSON.stringify(user));
+    updateWeightHistory(user.weight);
     setView("details");
   };
 
@@ -42,6 +75,7 @@ export const Profile = () => {
 
     if (savedUser) {
       setUser(savedUser);
+      updateWeightHistory(savedUser.weight); 
     } else {
       const newUser = {
         ...user,
@@ -54,10 +88,16 @@ export const Profile = () => {
     setView("details");
   };
 
-  const handleWeightChange = (newWeight) => {
-    const updated = { ...user, weight: newWeight };
-    setUser(updated);
-    localStorage.setItem("user", JSON.stringify(updated));
+const handleWeightChange = (newWeight) => {
+  const updatedUser = { ...user, weight: newWeight };
+  setUser(updatedUser);
+  localStorage.setItem("user", JSON.stringify(updatedUser));
+};
+  
+  const handleWeightBlur = () => {
+    if (user.weight && user.weight.trim() !== "") {
+      updateWeightHistory(user.weight);
+    }
   };
 
   const handleLogout = () => {
@@ -170,11 +210,12 @@ export const Profile = () => {
             <p className="info-value">{user.birthday || "Не вказано"}</p>
           </div>
           <div className="weight-edit">
-            <span>Вага</span>
+            <span>Вага (кг)</span>
             <input
               type="number"
               value={user.weight}
               onChange={(e) => handleWeightChange(e.target.value)}
+              onBlur={handleWeightBlur}
             />
           </div>
           <button className="btn-secondary" onClick={handleLogout}>
