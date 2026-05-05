@@ -9,11 +9,7 @@ export const Menu = ({ isOpen, onClose }) => {
   return (
     <div className="menu-overlay">
       <header className="menu-header">
-        <img
-          src="./public/images/logo_white.png"
-          alt="Logo"
-          className="logo-white"
-        />
+        <p className="logo-white"> SPORT</p>
         <button
           className="close-button"
           onClick={onClose}

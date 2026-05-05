@@ -73,40 +73,27 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  gap: 16px;
+  margin-top: 88px;
+  margin-bottom: 128px;
 }
 
-.btn-primary, .btn-secondary {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-  text-align: center;
-  font-weight: bold;
-
-  font-size: 16px;
-  height: 50px;
-  flex: 1; 
+.action-buttons .btn-primary, 
+.action-buttons .btn-secondary {
+  flex: 1;
   max-width: 160px;
+  height: 50px;
+  margin: 0;
+  font-size: 16px;
 }
 
-.btn-primary {
-  background-color: var(--primary-blue);
-  color: white;
- 
-  margin-top: 88px;
-  margin-bottom: 128px;
+.btn-primary:hover .btn-secondary:hover{
+  background-color: var(--primary-hover);
 }
 
-.btn-secondary {
-  background-color: #CDC1FF;
-  color: var(--primary-blue);
-
-  margin-top: 88px;
-  margin-bottom: 128px;
-  margin-left: 32px; 
+.btn-primary:active .btn-secondary:active {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--primary-hover);
+  outline: none;
 }
 
 @media screen and (min-width: 768px) {
@@ -128,20 +115,17 @@
     margin: 116px 475px 63px 437px;
   }
 
-  .btn-primary, .btn-secondary {
+  .action-buttons {
+   gap: 32px;
+    margin-top: 63px;
+    margin-bottom: 41px;
+  }
+
+  .action-buttons .btn-primary, 
+  .action-buttons .btn-secondary {
+   max-width: 280px;
     height: 60px;
-    max-width: 280px;
-  }
-
-  .btn-primary {
-    margin-top: 63px;
-    margin-bottom: 41px;
-  }
-
-  .btn-secondary {
-    margin-top: 63px;
-    margin-bottom: 41px;
-    margin-left: 76px;
+    font-size: 20px;
   }
 }
 
@@ -163,27 +147,8 @@
     margin: 116px 566px 63px 592px;
   }
 
-  .btn-primary {
+  .action-buttons {
     margin-top: 67px;
     margin-bottom: 181px;
   }
-
-  .btn-secondary {
-    margin-top: 67px;
-    margin-bottom: 181px;
-    margin-left: 76px;
-  }
-}
-
-.btn-primary:hover { background-color: var(--primary-hover); }
-.btn-secondary:hover { background-color: var(--secondary-hover); color: white; }
-
-.btn-primary:active {
-  outline: 3px solid #8293c9;
-  outline-offset: 2px;
-}
-
-.btn-secondary:active {
-  outline: 3px solid var(--primary-blue);
-  outline-offset: 2px;
 }
