@@ -4,13 +4,17 @@ import { Header } from "./Header";
 import { Menu } from "./Menu";
 import "./History.css";
 import "./common.css";
-import './History.css';
 
 export const History = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const history = JSON.parse(localStorage.getItem("workoutHistory") || "[]");
+  const [history] = useState(() => {
+    const currentUser = localStorage.getItem("currentUser");
+    if (!currentUser) return [];
+
+    return JSON.parse(localStorage.getItem("workoutHistory") || "[]");
+  });
 
   return (
     <div className="page-container">
@@ -18,15 +22,14 @@ export const History = () => {
       <Menu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       <main className="history-main">
-        <h1>Історія тренувань</h1>
+        <h1 className="history-title">Історія тренувань</h1>
 
         <div className="history-list">
           {history.length > 0 ? (
             history.map((workout) => (
               <div key={workout.id} className="history-card">
                 <div className="card-content">
-                  <p>
-                    Дата:{" "}
+                  <p className="workout-date">
                     {new Date(workout.date).toLocaleDateString("uk-UA", {
                       day: "numeric",
                       month: "long",
@@ -34,8 +37,12 @@ export const History = () => {
                     })}
                   </p>
                   <div className="workout-stats">
-                    <span>{workout.exercises.length} вправи</span>
-                    <span>Важкість: {workout.difficulty}/10</span>
+                    <span className="stats-item">
+                      <strong>{workout.exercises.length}</strong> вправи
+                    </span>
+                    <span className="stats-item">
+                      Важкість: <strong>{workout.difficulty}/10</strong>
+                    </span>
                   </div>
                 </div>
                 <button
@@ -47,17 +54,21 @@ export const History = () => {
               </div>
             ))
           ) : (
-            <p>У вас ще немає записаних тренувань.</p>
+            <div className="empty-history">
+              <p>У вас ще немає записаних тренувань.</p>
+            </div>
           )}
         </div>
 
-        <button
-          type="button"
-          className="btn-analytics"
-          onClick={() => navigate("/analytics")}
-        >
-          Переглянути аналітику
-        </button>
+        {history.length > 0 && (
+          <button
+            type="button"
+            className="btn-analytics"
+            onClick={() => navigate("/analytics")}
+          >
+            Переглянути аналітику
+          </button>
+        )}
       </main>
     </div>
   );
