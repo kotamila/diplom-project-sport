@@ -42,7 +42,7 @@ export const Training = () => {
   };
 
   const handleSaveWorkout = () => {
-    const currentUser = localStorage.getItem("user");
+    const currentUser = localStorage.getItem("currentUser");
     if (!currentUser) {
       setErrorMessage(
         "Будь ласка, авторизуйтесь у профілі, щоб зберігати тренування!",
