@@ -17,14 +17,21 @@ import "./Analytics.css";
 export const Analytics = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const history = useMemo(
-    () => JSON.parse(localStorage.getItem("workoutHistory") || "[]"),
+  const isAuthenticated = useMemo(
+    () => !!localStorage.getItem("currentUser"),
     [],
   );
+
+  const history = useMemo(() => {
+    if (!isAuthenticated) return [];
+    return JSON.parse(localStorage.getItem("workoutHistory") || "[]");
+  }, [isAuthenticated]);
+
   const weightHistory = useMemo(() => {
+    if (!isAuthenticated) return [];
     const data = JSON.parse(localStorage.getItem("weightHistory") || "[]");
     return data.sort((a, b) => new Date(a.fullDate) - new Date(b.fullDate));
-  }, []);
+  }, [isAuthenticated]);
 
   const workoutDates = useMemo(
     () => history.map((w) => new Date(w.date).toDateString()),
@@ -183,4 +190,4 @@ export const Analytics = () => {
       </main>
     </div>
   );
-};;
+};
