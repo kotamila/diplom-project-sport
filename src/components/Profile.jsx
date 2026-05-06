@@ -10,18 +10,17 @@ export const Profile = () => {
   const [registerError, setRegisterError] = useState("");
 
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem("user");
-    return saved
-      ? JSON.parse(saved)
+    const activeSession = localStorage.getItem("currentUser");
+    return activeSession
+      ? JSON.parse(activeSession)
       : { firstName: "", lastName: "", email: "", birthday: "", weight: "" };
   });
 
   const [loginData, setLoginData] = useState({ firstName: "", lastName: "" });
 
   const [view, setView] = useState(() => {
-    return localStorage.getItem("user") ? "details" : "register";
+    return localStorage.getItem("currentUser") ? "details" : "register";
   });
-
 
   const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -75,14 +74,16 @@ export const Profile = () => {
       return;
     }
 
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("registeredUser", JSON.stringify(user));
+    localStorage.setItem("currentUser", JSON.stringify(user));
+
     updateWeightHistory(user.weight);
     setRegisterError("");
     setView("details");
   };
 
   const handleLogin = () => {
-    const savedUser = JSON.parse(localStorage.getItem("user"));
+    const savedUser = JSON.parse(localStorage.getItem("registeredUser"));
 
     if (
       savedUser &&
@@ -90,12 +91,13 @@ export const Profile = () => {
       savedUser.lastName.toLowerCase() === loginData.lastName.toLowerCase()
     ) {
       setUser(savedUser);
+      localStorage.setItem("currentUser", JSON.stringify(savedUser));
       updateWeightHistory(savedUser.weight);
       setLoginError("");
       setView("details");
     } else {
       setLoginError(
-        "Акаунт не знайдено. Будь ласка, перевірте дані або зареєструйтесь.",
+        "Акаунт не знайдено. Перевірте дані або зареєструйтесь (пам'ятайте про регістр).",
       );
     }
   };
@@ -103,7 +105,8 @@ export const Profile = () => {
   const handleWeightChange = (newWeight) => {
     const updatedUser = { ...user, weight: newWeight };
     setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+    localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+    localStorage.setItem("registeredUser", JSON.stringify(updatedUser));
   };
 
   const handleWeightBlur = () => {
@@ -113,7 +116,7 @@ export const Profile = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("currentUser");
     setUser({
       firstName: "",
       lastName: "",
@@ -122,7 +125,7 @@ export const Profile = () => {
       weight: "",
     });
     setLoginData({ firstName: "", lastName: "" });
-    setView("register");
+    setView("login");
   };
 
   return (
