@@ -16,7 +16,7 @@
 }
 
 .burger-menu {
-display: flex;
+  display: flex;
   background: none;
   border: none;
   cursor: pointer;
@@ -28,7 +28,7 @@ display: flex;
 }
 
 .burger-icon-lines {
-  width: 30px; 
+  width: 30px;
   height: 20px;
   display: flex;
   flex-direction: column;
@@ -47,11 +47,6 @@ display: flex;
 @media screen and (min-width: 768px) {
   .logo {
     margin: 34px 0 80px 42px;
-  }
-
-  .burger-icon-lines {
-    width: 35px;
-    height: 24px;
   }
 }
 
