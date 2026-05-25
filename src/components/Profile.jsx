@@ -164,23 +164,20 @@ export const Profile = () => {
             }}
           />
 
-          <input
-            type={user.birthday ? "date" : "text"}
-            placeholder="Дата народження"
-            value={user.birthday}
-            onFocus={(e) => {
-              e.target.type = "date";
-            }}
-            onBlur={(e) => {
-              if (!user.birthday) {
-                e.target.type = "text";
-              }
-            }}
-            onChange={(e) => {
-              setUser({ ...user, birthday: e.target.value });
-              setRegisterError("");
-            }}
-          />
+          <div className="date-input-wrapper">
+            <input
+              type="date"
+              id="birthday"
+              className={user.birthday ? "has-value" : ""}
+              value={user.birthday}
+              onChange={(e) => {
+                setUser({ ...user, birthday: e.target.value });
+                setRegisterError("");
+              }}
+              autoComplete="bday"
+            />
+            <label htmlFor="birthday">Дата народження</label>
+          </div>
 
           <input
             type="number"

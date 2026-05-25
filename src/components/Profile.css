@@ -38,6 +38,40 @@ input[type="number"] {
   align-items: center;
 }
 
+.date-input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+
+.date-input-wrapper input[type="date"] {
+  margin-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.date-input-wrapper label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-size: 16px;
+  color: #7d7b7b;
+  pointer-events: none;
+  background: var(--white);
+  border-radius: 8px;
+  transition: opacity 0.1s;
+}
+
+.date-input-wrapper input[type="date"]:focus + label,
+.date-input-wrapper input[type="date"].has-value + label {
+  opacity: 0;
+}
+
 input::-webkit-date-and-time-value {
   text-align: left;
   min-height: 20px;
