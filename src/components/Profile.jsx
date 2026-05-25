@@ -163,36 +163,17 @@ export const Profile = () => {
               setRegisterError("");
             }}
           />
+
           <input
-            type={user.birthday ? "date" : "text"}
+            type="date"
             placeholder="Дата народження"
             value={user.birthday}
-            onFocus={(e) => {
-              e.target.type = "date";
-              if ("showPicker" in HTMLInputElement.prototype) {
-                try {
-                  e.target.showPicker();
-                } catch (err) {
-                  console.log(err);
-                }
-              }
-            }}
-            onClick={(e) => {
-              e.target.type = "date";
-              if ("showPicker" in HTMLInputElement.prototype) {
-                try {
-                  e.target.showPicker();
-                } catch (err) {
-                  console.log(err);
-                }
-              }
-            }}
-            onBlur={(e) => !user.birthday && (e.target.type = "text")}
             onChange={(e) => {
               setUser({ ...user, birthday: e.target.value });
               setRegisterError("");
             }}
           />
+
           <input
             type="number"
             placeholder="Вага"
