@@ -41,18 +41,22 @@ export const Analytics = () => {
   const activityData = useMemo(() => {
     const activity = history.reduce((acc, curr) => {
       const date = new Date(curr.date);
-      const day = date.toLocaleDateString("uk-UA", {
-        day: "2-digit",
-        month: "short",
-      });
+      const dayNum = date.getDate();
+      const monthName = date
+        .toLocaleDateString("uk-UA", { month: "short" })
+        .replace(".", "");
+
+      const day = `${dayNum} ${monthName}`;
       acc[day] = (acc[day] || 0) + 1;
       return acc;
     }, {});
 
-    return Object.keys(activity).map((key) => ({
-      name: key,
-      count: activity[key],
-    }));
+    return Object.keys(activity)
+      .reverse()
+      .map((key) => ({
+        name: key,
+        count: activity[key],
+      }));
   }, [history]);
 
   const getTileClassName = ({ date, view }) => {
@@ -98,9 +102,13 @@ export const Analytics = () => {
                 <XAxis
                   dataKey="name"
                   stroke="#1C39A1"
-                  fontSize={12}
+                  fontSize={10}
                   tickLine={false}
                   axisLine={false}
+                  interval={0}
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
                 />
                 <YAxis
                   stroke="#1C39A1"
@@ -120,6 +128,7 @@ export const Analytics = () => {
                 <Line
                   type="monotone"
                   dataKey="count"
+                  name="Кількість"
                   stroke="#1C39A1"
                   strokeWidth={4}
                   dot={{
@@ -174,6 +183,7 @@ export const Analytics = () => {
                 <Line
                   type="monotone"
                   dataKey="weight"
+                  name="Вага"
                   stroke="#FF4D4D"
                   strokeWidth={4}
                   dot={{
