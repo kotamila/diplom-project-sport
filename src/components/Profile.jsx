@@ -168,8 +168,14 @@ export const Profile = () => {
             type={user.birthday ? "date" : "text"}
             placeholder="Дата народження"
             value={user.birthday}
-            onFocus={(e) => (e.target.type = "date")}
-            onBlur={(e) => !user.birthday && (e.target.type = "text")}
+            onFocus={(e) => {
+              e.target.type = "date";
+            }}
+            onBlur={(e) => {
+              if (!user.birthday) {
+                e.target.type = "text";
+              }
+            }}
             onChange={(e) => {
               setUser({ ...user, birthday: e.target.value });
               setRegisterError("");
